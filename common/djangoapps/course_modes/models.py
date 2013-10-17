@@ -95,6 +95,15 @@ class CourseMode(models.Model):
         modes = cls.modes_for_course(course_id)
         return min(mode.min_price for mode in modes if mode.currency == currency)
 
+    @classmethod
+    def verified_refund_expiration_date(cls, course_id, mode_slug):
+        """
+        Returns the expiration date for verified certificate refunds.  After this date, refunds are
+        no longer possible.  Note that this is currently set to be identical to the expiration date for
+        verified cert signups, but this could be changed in the future
+        """
+        return mode_for_course(course_id,'verified').expiration_date
+
     def __unicode__(self):
         return u"{} : {}, min={}, prices={}".format(
             self.course_id, self.mode_slug, self.min_price, self.suggested_prices
