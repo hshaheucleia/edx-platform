@@ -433,7 +433,23 @@ def change_enrollment(request):
             if (CourseMode.refund_expiration_date(course_id,'verified') < date.today()) and (verified == 'verified'):
                 # send an email
                 # change the modal
-                print "woo"
+                # compose email
+                subject = "testsubject"
+                # todo: make message include important info
+                message = "testmessage"
+                to_email = settings.PAYMENT_SUPPORT_EMAIL
+                # actually fix this later
+                from_email = "lol@edx.org"
+
+                # todo: is there some setting i should check here? about emails being turned on and whatnot?
+                # todo: check that these FROM_EMAIL, TO_EMAIL seem legit, abstract them into settings
+                try:
+                    send_mail(subject,message,FROM_EMAIL, TO_EMAIL, fail_silently=False)
+                except:
+                    log.warning('Unable to send reimbursement request to billing', exc_info=True)
+                    js['value'] = _('Could not send reimbursement request.')
+                    return HttpResponse(json.dumps(js))
+                # email has been sent, let's deal with the order now
 
             CourseEnrollment.unenroll(user, course_id)
 
@@ -787,7 +803,7 @@ def create_account(request, post_override=None):
     subject = ''.join(subject.splitlines())
     message = render_to_string('emails/activation_email.txt', d)
 
-    # dont send email if we are doing load testing or random user generation for some reason
+    # don't send email if we are doing load testing or random user generation for some reason
     if not (settings.MITX_FEATURES.get('AUTOMATIC_AUTH_FOR_TESTING')):
         try:
             if settings.MITX_FEATURES.get('REROUTE_ACTIVATION_EMAIL'):
