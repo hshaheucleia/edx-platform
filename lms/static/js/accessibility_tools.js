@@ -1,3 +1,5 @@
+var focusedElementBeforeModal;
+
 var accessible_modal = function(trigger, closeButtonId, modalId, mainPageId) {
   // Modifies a lean modal to optimize focus management.
   // "trigger" is the selector for the link element that triggers the modal.
@@ -11,6 +13,7 @@ var accessible_modal = function(trigger, closeButtonId, modalId, mainPageId) {
   var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
 
   $(trigger).click(function(){
+    focusedElementBeforeModal = $(":focus");
     // when modal is opened, adjust tabindexes and aria-hidden attributes
 
     $(mainPageId).attr("aria-hidden", "true");
@@ -54,7 +57,7 @@ var accessible_modal = function(trigger, closeButtonId, modalId, mainPageId) {
     $(closeButtonId).click(function(){
       $(mainPageId).attr("aria-hidden", "false");
       $(modalId).attr("aria-hidden", "true");
-      $(trigger).focus()
+      focusedElementBeforeModal.focus()
     });
 
     // get modal to exit on escape key
