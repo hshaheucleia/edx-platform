@@ -99,7 +99,9 @@
             showinfo: 0,
             enablejsapi: 1,
             modestbranding: 1,
-            html5: 1
+            html5: 1,
+            start: 0,
+            end: null
           },
           videoId: 'cogebirgzzM',
           events: {
