@@ -450,7 +450,7 @@ def change_enrollment(request):
                     js['value'] = _('Could not send reimbursement request.')
                     return HttpResponse(json.dumps(js))
                 # email has been sent, let's deal with the order now
-
+                
             CourseEnrollment.unenroll(user, course_id)
 
             org, course_num, run = course_id.split("/")

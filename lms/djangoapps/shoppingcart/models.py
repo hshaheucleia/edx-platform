@@ -67,6 +67,9 @@ class Order(models.Model):
     processor_reply_dump = models.TextField(blank=True)
 
     @classmethod
+    def find_order(cls, user, )
+
+    @classmethod
     def get_cart_for_user(cls, user):
         """
         Always use this to preserve the property that at most 1 order per user has status = 'cart'
