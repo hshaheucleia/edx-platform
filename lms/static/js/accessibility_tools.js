@@ -1,23 +1,33 @@
-var accessible_modal = function(trigger, close_button, tabbables, modal_id) {
+var accessible_modal = function(trigger, closeButtonId, modalId, mainPageId) {
   // Modifies a lean modal to optimize focus management.
-  // "tabbables" are the jQuery selectors of the modal elements that you
-  // what to tab through. The selector for the submit should go last.
-  // The order of selectors determines their tabbing order
-  // "close_button" is the selector for the button that closes out the modal.
   // "trigger" is the selector for the link element that triggers the modal.
+  // "closeButtonId" is the selector for the button that closes out the modal.
+  // "modalId" is the selector for the modal being managed
+  // "mainPageId" is the selector for the main part of the page
+  // 
+  // see http://accessibility.oit.ncsu.edu/blog/2013/09/13/the-incredible-accessible-modal-dialog/
+  // for more information on managing modals
+  // 
+  var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
 
   $(trigger).click(function(){
-    // when modal is opened, adjust tabindexes
-    $(close_button).attr("tabindex", "1");
-    $(tabbables).attr("tabindex", "2");
-    $(close_button).focus()
+    // when modal is opened, adjust tabindexes and aria-hidden attributes
+
+    $(mainPageId).attr("aria-hidden", "true");
+    $(modalId).attr("aria-hidden", "false");
+  
+    var focusableItems = $(modalId).find("*").filter(focusableElementsString).filter(':visible');
+    
+    focusableItems.attr("tabindex", "2");
+    $(closeButtonId).attr("tabindex", "1");
+    $(closeButtonId).focus()
 
     // define the last tabbable element to complete tab cycle
     var last;
-    if ($(tabbables).length !== 0) {
-      last = $(tabbables).last();
+    if (focusableItems.length !== 0) {
+      last = focusableItems.last();
     } else {
-      last = $(close_button);
+      last = $(closeButtonId);
     };
 
     // tab on last element in modal returns to the first one
@@ -26,12 +36,12 @@ var accessible_modal = function(trigger, close_button, tabbables, modal_id) {
       // 9 is the js keycode for tab
       if (!e.shiftKey && keyCode === 9) {
         e.preventDefault();
-        $(close_button).focus();
+        $(closeButtonId).focus();
       }
     });
 
     // shift+tab on first element in modal returns to the last one
-    $(close_button).on('keydown', function(e) {
+    $(closeButtonId).on('keydown', function(e) {
       var keyCode = e.keyCode || e.which;
       // 9 is the js keycode for tab
       if (e.shiftKey && keyCode == 9) {
@@ -40,8 +50,10 @@ var accessible_modal = function(trigger, close_button, tabbables, modal_id) {
       }
     });
 
-    // return focus to trigger on close
-    $(close_button).click(function(){
+    // manage aria-hidden attrs, return focus to trigger on close
+    $(closeButtonId).click(function(){
+      $(mainPageId).attr("aria-hidden", "false");
+      $(modalId).attr("aria-hidden", "true");
       $(trigger).focus()
     });
 
@@ -51,7 +63,7 @@ var accessible_modal = function(trigger, close_button, tabbables, modal_id) {
       // 27 is the javascript keycode for the ESC key
       if (keyCode === 27) {
           e.preventDefault();
-          $(close_button).click();
+          $(closeButtonId).click();
       }
     });
   });

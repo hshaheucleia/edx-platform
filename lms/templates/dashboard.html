@@ -104,17 +104,21 @@
       return false;
     });
 
-    accessible_modal(".edit-name", "#apply_name_change .close-modal", "#new_name_field, #name_rationale_field, #submit");
+    accessible_modal(".edit-name", "#apply_name_change .close-modal", "#apply_name_change", "#dashboard-main");
 
-    accessible_modal(".edit-email", "#change_email .close-modal", "#new_email_field, #new_email_password, #submit_email_change");
+    accessible_modal(".edit-email", "#change_email .close-modal", "#change_email", "#dashboard-main");
 
-    accessible_modal("#pwd_reset_button", "#password_reset_complete .close-modal", "");
+    accessible_modal("#pwd_reset_button", "#password_reset_complete .close-modal", "#password_reset_complete", "#dashboard-main");
+    
+    accessible_modal(".email-settings", "#email-settings-modal .close-modal", "#email-settings-modal", "#dashboard-main");
+
+    accessible_modal(".unenroll", "#unenroll_modal .close-modal", "#unenroll_modal", "#dashboard-main");
 
   })(this)
   </script>
 </%block>
 
-<section class="container dashboard">
+<section class="container dashboard" id="dashboard-main" aria-hidden="false">
 
   %if message:
     <section class="dashboard-banner">
@@ -200,7 +204,7 @@
   </section>
 </section>
 
-<section id="email-settings-modal" class="modal">
+<section id="email-settings-modal" class="modal" aria-hidden="true">
   <div class="inner-wrapper" role="dialog" aria-labelledby="email-settings-title">
     <button class="close-modal">&#10005; <span class="sr">${_('Close Modal')}</span></button>
 
@@ -219,7 +223,7 @@
   </div>
 </section>
 
-<section id="unenroll-modal" class="modal unenroll-modal">
+<section id="unenroll-modal" class="modal unenroll-modal" aria-hidden="true">
   <div class="inner-wrapper" role="alertdialog" aria-labelledy="unenrollment-modal-title">
     <button class="close-modal">&#10005; <span class="sr">${_('Close Modal')}</span></button>
 
@@ -240,7 +244,7 @@
   </div>
 </section>
 
-<section id="password_reset_complete" class="modal">
+<section id="password_reset_complete" class="modal" aria-hidden="true">
   <div class="inner-wrapper" role="dialog" aria-labelledby="password-reset-email">
     <button class="close-modal">&#10005; <span class="sr">${_('Close Modal')}</span></button>
 
@@ -258,7 +262,7 @@
   </div>
 </section>
 
-<section id="change_email" class="modal">
+<section id="change_email" class="modal" aria-hidden="true">
   <div class="inner-wrapper" role="dialog" aria-labelledby="change_email_title">
     <button class="close-modal">&#10005; <span class="sr">${_('Close Modal')}</span></button>
 
@@ -288,7 +292,7 @@
   </div>
 </section>
 
-<section id="apply_name_change" class="modal">
+<section id="apply_name_change" class="modal" aria-hidden="true">
   <div class="inner-wrapper" role="dialog" aria-labelledby="change-name-title">
     <button class="close-modal">&#10005; <span class="sr">${_('Close Modal')}</span></button>
 
