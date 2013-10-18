@@ -16,6 +16,7 @@ requirejs.config({
         "jquery.fileupload": "xmodule_js/common_static/js/vendor/jQuery-File-Upload/js/jquery.fileupload",
         "jquery.iframe-transport": "xmodule_js/common_static/js/vendor/jQuery-File-Upload/js/jquery.iframe-transport",
         "jquery.inputnumber": "xmodule_js/common_static/js/vendor/html5-input-polyfills/number-polyfill",
+        "jquery.maskedinput": "xmodule_js/common_static/js/vendor/jquery.maskedinput.min",
         "datepair": "xmodule_js/common_static/js/vendor/timepicker/datepair",
         "date": "xmodule_js/common_static/js/vendor/date",
         "underscore": "xmodule_js/common_static/js/vendor/underscore-min",
@@ -85,6 +86,10 @@ requirejs.config({
         "jquery.inputnumber": {
             deps: ["jquery"],
             exports: "jQuery.fn.inputNumber"
+        },
+        "jquery.maskedinput": {
+            deps: ["jquery"],
+            exports: "jQuery.fn.mask"
         },
         "jquery.tinymce": {
             deps: ["jquery", "tinymce"],
