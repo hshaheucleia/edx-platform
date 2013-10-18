@@ -69,3 +69,13 @@ Feature: CMS.Video Component
   #  Then Captions become "invisible" after 3 seconds
   #  And I hover over button "volume"
   #  Then Captions are "invisible"
+
+  # 10
+  Scenario: When start end end times are specified, a range on slider is shown
+    Given I have created a Video component
+    And I edit the component
+    And Enter a start time of 10 seconds
+    And Enter an end time of 20 seconds
+    And I close the component editor
+    And I click Play button
+    Then I see a range on slider starting at 20 and running for 40 %

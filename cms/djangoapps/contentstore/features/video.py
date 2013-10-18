@@ -7,6 +7,8 @@ from contentstore.utils import get_modulestore
 BUTTONS = {
     'CC': '.hide-subtitles',
     'volume': '.volume',
+    'Play': '.video_control.play',
+    'Save': 'save-button',
 }
 
 
@@ -154,3 +156,27 @@ def check_captions_visibility_state(_step, visibility_state, timeout):
         assert world.css_visible('.subtitles')
     else:
         assert not world.css_visible('.subtitles')
+
+
+@step('Enter (?:a|an) (.+) time of (.+) seconds$')
+def enter_start_end_time(_step, type_of_time, time):
+    type_of_time = type_of_time.strip()
+    time = int(time.strip())
+
+
+@step('I click (.+) button$')
+def click_a_button(_step, button):
+    button = button.strip(button)
+    world.browser.find_by_css(BUTTONS[button]).click()
+
+
+@step('I close the component editor$')
+def close_component_editor(_step):
+    _step.given('I click Save button')
+
+
+@step('I see a range on slider starting at (.+) and running for (.+) %$')
+def see_a_range_slider_with_proper_range(_step, left, width):
+    left = int(left.strip())
+    width = int(width.strip())
+
