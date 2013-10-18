@@ -1,7 +1,7 @@
 """
 Student Views
 """
-import datetime
+from datetime import datetime, date, time
 import json
 import logging
 import random
@@ -430,7 +430,7 @@ def change_enrollment(request):
             # did they sign up for verified certs?
             verified = CourseEnrollment.enrollment_mode_for_user(user, course_id)
             # has the expiration date for refunds passed?
-            if (CourseMode.refund_expiration_date(course_id,'verified') < models.DateField(auto_now=True)) and verified == 'verified':
+            if (CourseMode.refund_expiration_date(course_id,'verified') < date.today()) and (verified == 'verified'):
                 # send an email
                 # change the modal
                 print "woo"
