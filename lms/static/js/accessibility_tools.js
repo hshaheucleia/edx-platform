@@ -14,8 +14,8 @@ var accessible_modal = function(trigger, closeButtonId, modalId, mainPageId) {
 
   $(trigger).click(function(){
     focusedElementBeforeModal = $(":focus");
-    // when modal is opened, adjust tabindexes and aria-hidden attributes
 
+    // when modal is opened, adjust tabindexes and aria-hidden attributes
     $(mainPageId).attr("aria-hidden", "true");
     $(modalId).attr("aria-hidden", "false");
   
@@ -54,7 +54,7 @@ var accessible_modal = function(trigger, closeButtonId, modalId, mainPageId) {
     });
 
     // manage aria-hidden attrs, return focus to trigger on close
-    $(closeButtonId).click(function(){
+    $("#lean_overlay, " + closeButtonId).click(function(){
       $(mainPageId).attr("aria-hidden", "false");
       $(modalId).attr("aria-hidden", "true");
       focusedElementBeforeModal.focus()
